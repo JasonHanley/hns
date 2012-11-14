@@ -1,4 +1,6 @@
 <?php
+require_once('custom.php');
+
 $page = 'news';
 
 if(isset($_GET['page']))

@@ -12,6 +12,7 @@
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/custom.js"></script>
 
 <script>
     var page = '<?php echo $page ?>';
@@ -19,7 +20,9 @@
 
 <div id="fb-root"></div>
 <script>
-  window.fbAsyncInit = function() {
+var FBC = {callback: null};
+
+window.fbAsyncInit = function() {
     // init the FB JS SDK
     FB.init({
       appId      : '365271816898369', // App ID from the App Dashboard
@@ -29,65 +32,8 @@
     });
 
     // Additional initialization code such as adding Event Listeners goes here
-    
-    function doPost() {
-        FB.ui(
-        {
-            method: 'feed',
-            name: 'The Facebook SDK for Javascript',
-            caption: 'Bringing Facebook to the desktop and mobile web',
-            description: (
-            'A small JavaScript library that allows you to harness ' +
-            'the power of Facebook, bringing the user\'s identity, ' +
-            'social graph and distribution power to your site.'
-            ),
-            link: 'https://developers.facebook.com/docs/reference/javascript/',
-            picture: 'http://www.fbrell.com/public/f8.jpg'
-            },
-            function(response) {
-                if (response && response.post_id) {
-                alert('Post was published.');
-            } else {
-                alert('Post was not published.');
-            }
-        }
-        );
-
-    }
-    
-    if(page == 'mine') {
-        FB.getLoginStatus(function(response) {
-            if (response.status === 'connected') {
-                // the user is logged in and has authenticated your
-                // app, and response.authResponse supplies
-                // the user's ID, a valid access token, a signed
-                // request, and the time the access token 
-                // and signed request each expire
-                var uid = response.authResponse.userID;
-                var accessToken = response.authResponse.accessToken;
-                
-                FB.api('/me', function(response) {
-                    $('#loginStatus').html('Good to see you, ' + response.name + '.');
-                    doPost();
-                });
-            } else {
-                // the user isn't logged in to Facebook.
-                $('#loginStatus').html('Not logged into Facebook.');
-                
-                FB.login(function(response) {
-                    if (response.authResponse) {
-                        FB.api('/me', function(response) {
-                            $('#loginStatus').html('Good to see you, ' + response.name + '.');
-                            doPost();
-                        });
-                    } else {
-                        $('#loginStatus').html('User cancelled login or did not fully authorize.');
-                    }
-                });
-            }
-        });
-    }
-    
+    if(FBC.callback)
+        FBC.callback();
   };
 
   // Load the SDK's source Asynchronously

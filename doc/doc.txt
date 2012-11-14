@@ -1,3 +1,6 @@
 HNS - Hacker News Social
 
-Keeps track of everything you'd read on Hacker News and lets you share with friends.
+Keeps track of everything you've read on Hacker News and lets you share with friends.
+
+Notes:
+- http://net.tutsplus.com/tutorials/php/html-parsing-and-screen-scraping-with-the-simple-html-dom-library/
