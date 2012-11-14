@@ -1,0 +1,1 @@
+<div id="loginStatus"></div>

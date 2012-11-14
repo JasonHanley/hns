@@ -1,0 +1,3 @@
+HNS - Hacker News Social
+
+Keeps track of everything you'd read on Hacker News and lets you share with friends.
