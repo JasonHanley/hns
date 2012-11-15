@@ -34,4 +34,3 @@ function readURL($url, $cacheSeconds = null)
     
     return $ret;
 }
-?>
