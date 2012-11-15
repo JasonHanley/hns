@@ -1,3 +1,25 @@
 #page {
     margin: 10px 10px;
 }
+
+span.post {
+    width:100%;
+    vertical-align: top;    
+    display:inline-block;
+}
+
+span.post a {
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    max-width:250px;
+}
+
+img.profile {
+    float:left;
+    width:50px;
+    height:50px;
+    margin:4px;
+    border-radius:3px;
+}

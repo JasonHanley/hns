@@ -12,7 +12,6 @@ function fbLogin()
     FB.login(function(response) {
         if (response.authResponse) {
             FB.api('/me', function(response) {
-                $('#loginStatus').html('Good to see you, ' + response.name + '.');
                 displayMine();
             });
         } else {
@@ -39,7 +38,15 @@ function displayMine() {
             var data = response.data;
             var output = '<h2>Newsfeed</h2><ol>';
             for(var i=0; i<data.length; i++) {
-                output += '<li>' + data[i].message + "</li>\n"; 
+                output += '<li>';
+                output += '<span class="post"><img class="profile" src="http://graph.facebook.com/'+data[i].from.id+'/picture" />';
+                output += '<a href="http://www.facebook.com/'+data[i].from.id+'" target="_blank"><i>'+
+                    data[i].from.name+'</i></a> ';
+                output += data[i].message;
+                if(typeof data[i].link != 'undefined') {
+                    output += '<br><a href="'+data[i].link+'" target="_blank">'+data[i].link+'</a>';
+                } 
+                output += "</span></li>\n";
             }
             output += '</ol><h2>Your Posts</h2><ol>';
             FB.api('/me/posts', function(response) {
@@ -48,7 +55,12 @@ function displayMine() {
                 } else {
                     var data = response.data;
                     for(var i=0; i<data.length; i++) {
-                        output += '<li>' + data[i].message + "</li>\n"; 
+                        output += '<li>';
+                        output += data[i].message;
+                        if(typeof data[i].link != 'undefined') {
+                            output += ' - <a href="'+data[i].link+'" target="_blank">'+data[i].link+'</a>';
+                        } 
+                        output += "</li>\n";
                     }
                 }
                 output += '</ol>';
@@ -72,8 +84,7 @@ FBC.callback = function() {
             var accessToken = response.authResponse.accessToken;
             
             FB.api('/me', function(response) {
-                $('#loginStatus').html('Good to see you, ' + response.name + '.');
-                checkPerms()
+                checkPerms();
             });
         } else {
             // the user isn't logged in to Facebook.

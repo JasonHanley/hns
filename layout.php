@@ -14,18 +14,15 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/custom.js"></script>
 
-<script>
-    var page = '<?php echo $page ?>';
-</script>
-
 <div id="fb-root"></div>
 <script>
+var page = '<?php echo $page ?>';
 var FBC = {callback: null};
 
 window.fbAsyncInit = function() {
     // init the FB JS SDK
     FB.init({
-      appId      : '365271816898369', // App ID from the App Dashboard
+      appId      : '<?php echo $appId ?>', // App ID from the App Dashboard
       status     : true, // check the login status upon init?
       cookie     : true, // set sessions cookies to allow your server to access the session?
       xfbml      : true  // parse XFBML tags on this page?
@@ -53,7 +50,7 @@ window.fbAsyncInit = function() {
             <a class="brand" href="./">HNS</a>
             <ul class="nav">
                 <li<?php if($page == 'news') echo ' class="active"'?>><a href="./?page=news">News</a></li>
-                <li<?php if($page == 'newest') echo ' class="active"'?>><a href="./?page=newest">Newest</a></li>
+                <!-- <li<?php if($page == 'newest') echo ' class="active"'?>><a href="./?page=newest">Newest</a></li> -->
                 <li<?php if($page == 'mine') echo ' class="active"'?>><a href="./?page=mine">My Stories</a></li>
             </ul>
         </div>
