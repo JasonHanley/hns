@@ -47,11 +47,11 @@ window.fbAsyncInit = function() {
 
     <div class="navbar">
         <div class="navbar-inner">
-            <a class="brand" href="./">HNS</a>
+            <a class="brand" href="./index.php">HNS</a>
             <ul class="nav">
-                <li<?php if($page == 'news') echo ' class="active"'?>><a href="./?page=news">News</a></li>
-                <!-- <li<?php if($page == 'newest') echo ' class="active"'?>><a href="./?page=newest">Newest</a></li> -->
-                <li<?php if($page == 'mine') echo ' class="active"'?>><a href="./?page=mine">My Stories</a></li>
+                <li<?php if($page == 'news') echo ' class="active"'?>><a href="./index.php?page=news">News</a></li>
+                <!-- <li<?php if($page == 'newest') echo ' class="active"'?>><a href="./index.php?page=newest">Newest</a></li> -->
+                <li<?php if($page == 'mine') echo ' class="active"'?>><a href="./index.php?page=mine">My Stories</a></li>
             </ul>
         </div>
     </div>
