@@ -8,14 +8,6 @@ span.post {
     display:inline-block;
 }
 
-span.post a {
-    display:inline-block;
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-    max-width:800px;
-}
-
 img.profile {
     float:left;
     width:50px;
@@ -24,17 +16,3 @@ img.profile {
     border-radius:3px;
 }
 
-
-/* RESPONSIVE */
-
-@media screen and (max-width: 600px) {
-    span.post a {
-         max-width:400px;
-    }     
-}
-
-@media screen and (max-width: 400px) {
-    span.post a {
-         max-width:250px;
-    }     
-}
