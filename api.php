@@ -18,27 +18,36 @@ if($action == 'trk')
         $url = $data['url'];
         $fromId = $data['fromId'];
         $fromName = $data['fromName'];
-        $guid = uniqid('');
-                
+        $urlGuid = uniqid('');
+        $sourceGuid = uniqid('');
+        
         $results = myDB::doQuery('select * from sources where fbid=?', array($fromId));
         if(!count($results))
         {
             // Insert new source
-            $sourceGuid = uniqid('');
             myDB::doInsert('insert into sources values (?,?,?)', array($sourceGuid, $fromName, $fromId));
         }
         elseif(count($results) == 1)
         {
             // Get existing source GUID
-            $source = $results[0];
-            $guid = $source['guid'];
-        }
-        else
-        {
-            echo 'ERROR: Multiple sources ('.$fromId.')';
+            $result = $results[0];
+            $sourceGuid = $result['guid'];
         }
         
-        myDB::doInsert('insert into urls values (?,?)', array($guid, $url));
-        myDB::doInsert('insert into url_source values (?,?)', array($guid, $sourceGuid));
+        $results = myDB::doQuery('select * from urls where url=?', array($url));
+        if(!count($results))
+        {
+            // Insert new URL
+            myDB::doInsert('insert into urls values (?,?)', array($urlGuid, $url));
+        }
+        elseif(count($results) == 1)
+        {
+            $result = $results[0];
+            $urlGuid = $result['guid'];
+        }
+        
+        // TODO: Check for duplicates
+        
+        myDB::doInsert('insert into url_source values (?,?)', array($urlGuid, $sourceGuid));
     }
 }
