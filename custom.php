@@ -1,5 +1,7 @@
 <?php
 
+define('PROJECT_DIR', realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR);
+
 function readURL($url, $cacheSeconds = null)
 {
     $filename = 'cache/'.urlencode($url).'.html';
@@ -27,10 +29,43 @@ function readURL($url, $cacheSeconds = null)
     // close cURL resource, and free up system resources
     curl_close($ch);
     
-    if($cacheSeconds)
+    if($ret && $cacheSeconds)
     {
         file_put_contents($filename, $ret);
     }
     
     return $ret;
+}
+
+class myDB
+{
+    /** @var PDO */
+    public static $pdo = null;
+
+    public static function init()
+    {
+        $filename = PROJECT_DIR.'db.sqlite';
+        self::$pdo = new PDO('sqlite:'.$filename);
+        return self::$pdo;
+    }
+
+    public static function doQuery($sql, array $params)
+    {
+        $sth = myDB::$pdo->prepare($sql);
+        if($sth->execute($params))
+            $ret = $sth->fetchAll();
+        else 
+            print_r(myDB::$pdo->errorInfo());
+        return $ret;
+    }
+    
+    public static function doInsert($sql, array $params)
+    {
+        $sth = myDB::$pdo->prepare($sql);
+        if($sth)
+            $ret = $sth->execute($params);
+        else 
+            print_r(myDB::$pdo->errorInfo());
+        return $ret;
+    }
 }

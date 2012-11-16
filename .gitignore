@@ -2,3 +2,4 @@
 /.project
 /.buildpath
 /config.php
+/db.sqlite

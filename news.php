@@ -29,8 +29,29 @@
             $link = $nextRow->firstChild->nextSibling->nextSibling->firstChild;
             assert($link->nodeName == 'a');
             
-            echo '<a href="'.$link->attributes->getNamedItem('href')->nodeValue.'" target="_blank">'.
-                $link->nodeValue.'</a><br>';
+            $title = $link->nodeValue;
+            $url = $link->attributes->getNamedItem('href')->nodeValue;
+            
+            $results = myDB::doQuery('select * from urls where url like ?', array($url));
+            if(count($results) < 1)
+            {
+                $guid = uniqid('');
+                
+                myDB::doInsert('insert into urls values(?,?)', array($guid, $url));
+                    
+                $hnid = '50a58983407aa';
+                
+                $results = myDB::doQuery('select * from url_source where url like ? and source like ?', 
+                    array($guid, $hnid));
+
+                if(count($results) < 1)
+                {
+                    myDB::doInsert('insert into url_source values(?,?)', array($guid, $hnid));
+                }
+            } 
+            
+            echo '<a href="'.$url.'" target="_blank">'.
+                $title.'</a><br>';
             
             $nextRow = $nextRow->nextSibling;
             //comments

@@ -35,6 +35,7 @@ function displayMine() {
         if (!response || response.error) {
             $('#news').html('Error:'+response.error.code);
         } else {
+            var urls = [];
             var data = response.data;
             var output = '<h2>Newsfeed</h2><ol>';
             for(var i=0; i<data.length; i++) {
@@ -45,9 +46,19 @@ function displayMine() {
                 output += data[i].message;
                 if(typeof data[i].link != 'undefined') {
                     output += '<br><a href="'+data[i].link+'" target="_blank">'+data[i].link+'</a>';
+                    var obj = {};
+                    obj.url = data[i].link;
+                    obj.fromId = data[i].from.id;
+                    obj.fromName = data[i].from.name;
+                    urls.push(obj);
                 } 
                 output += "</span></li>\n";
+                
             }
+
+            // Send list of links back to app
+            $.post('api.php?action=trk', {data: JSON.stringify(urls)});
+            
             output += '</ol><h2>Your Posts</h2><ol>';
             FB.api('/me/posts', function(response) {
                 if (!response || response.error) {
@@ -64,6 +75,8 @@ function displayMine() {
                     }
                 }
                 output += '</ol>';
+
+                // TODO: Send list of links back to app
 
                 $('#news').html(output);            
             });            
@@ -88,7 +101,6 @@ FBC.callback = function() {
             });
         } else {
             // the user isn't logged in to Facebook.
-            $('#loginStatus').html('Not logged into Facebook.');
             fbLogin();
         }
     });
