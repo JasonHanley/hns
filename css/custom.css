@@ -13,7 +13,7 @@ span.post a {
     overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
-    max-width:250px;
+    max-width:800px;
 }
 
 img.profile {
@@ -22,4 +22,19 @@ img.profile {
     height:50px;
     margin:4px;
     border-radius:3px;
+}
+
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 600px) {
+    span.post a {
+         max-width:400px;
+    }     
+}
+
+@media screen and (max-width: 400px) {
+    span.post a {
+         max-width:250px;
+    }     
 }

@@ -64,19 +64,26 @@ function displayMine() {
                 if (!response || response.error) {
                     $('#news').html('Error:'+response.error.code);
                 } else {
+                    var urls = [];
                     var data = response.data;
                     for(var i=0; i<data.length; i++) {
                         output += '<li>';
                         output += data[i].message;
                         if(typeof data[i].link != 'undefined') {
                             output += ' - <a href="'+data[i].link+'" target="_blank">'+data[i].link+'</a>';
+                            var obj = {};
+                            obj.url = data[i].link;
+                            obj.fromId = data[i].from.id;
+                            obj.fromName = data[i].from.name;
+                            urls.push(obj);
                         } 
                         output += "</li>\n";
                     }
+
+                    // Send list of links back to app
+                    $.post('api.php?action=trk', {data: JSON.stringify(urls)});
                 }
                 output += '</ol>';
-
-                // TODO: Send list of links back to app
 
                 $('#news').html(output);            
             });            

@@ -46,8 +46,11 @@ if($action == 'trk')
             $urlGuid = $result['guid'];
         }
         
-        // TODO: Check for duplicates
-        
-        myDB::doInsert('insert into url_source values (?,?)', array($urlGuid, $sourceGuid));
+        // Check for duplicates
+        $results = myDB::doQuery('select * from url_source where url=? and source=?', array($urlGuid, $sourceGuid));
+        if(!count($results))
+        {
+            myDB::doInsert('insert into url_source values (?,?)', array($urlGuid, $sourceGuid));
+        }
     }
 }
